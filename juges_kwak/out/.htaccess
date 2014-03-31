@@ -1,0 +1,5 @@
+PerlSetVar AuthFile emotions/etc/passwd
+AuthName "Resultats Emotions"
+AuthType Basic
+require user admin
+IndexIgnore */*

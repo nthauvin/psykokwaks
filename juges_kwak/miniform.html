@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <title>Informations à spécifier</title>
+    <style>
+      li {margin-bottom:10px;}
+    </style>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-27538348-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body style="font-family:Arial;width:600px;">
+    <h1>Informations à spécifier</h1>
+    <script type="text/javascript">
+      var age  = document.getElementsByName("age");
+      var sexe  = document.getElementsByName("sexe");
+      var audition  = document.getElementsByName("audition");
+      var langue = document.getElementsByName("langue");
+      var id = document.getElementsByName("id");
+      var ts = document.getElementsByName("ts");
+      function validate() {
+      if (!age[0].value) {
+      alert ("Veuillez entrer votre age");
+      return false;
+      }
+      if ((! sexe[0].checked) && (! sexe[1].checked)) {
+      alert ("Veuillez spécifier votre sexe");
+      return false;
+      }
+      if (!id[0].value) {
+      alert ("Veuillez spécifier votre prénom");
+      return false;
+      }
+      document.getElementsByName("ts")[0].setAttribute("value",Date.now());
+      return true;
+      }
+    </script>
+    <form action="listen.php" method="get" onsubmit="return validate();">
+      <ul>
+        <li>Age : <input type="text" name="age" size="3"/></li>
+        <li>Sexe: <input type="radio" name="sexe" value="H"/>Homme
+          <input type="radio" name="sexe" value="F"/>Femme</li>
+        <li>Prénom: <input type="text" name="id"/></li>
+      </ul>
+      <input type="hidden" name="ts" value="0"/>
+      <input type="hidden" name="langue" value="fr"/>
+      <input type="hidden" name="audition" value="normale"/>
+      <input type="hidden" name="step" value="0"/>
+      <br/>
+      <input type="submit" value="Commencer">
+    </form>
+  </body>
+</html>

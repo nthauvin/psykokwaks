@@ -1,0 +1,20 @@
+2014/03/06
+ * Fix : crash avec Jquery 1.7 -> 1.11
+ * Fix : Mauvaise détection des cases cochées
+
+2014/02/03
+ * New : emotion sur 2 caractère après 1er underscore (au lieu d'apparaître
+	en toutes lettres dans le nom de fichier)
+ * Fix : bug JS de validation
+
+2013/09/23
+ * New : Code sujet 5 caractères
+ * New : formulaire simplifié
+
+2013/02/20
+ * New : Nouveaux champs qualite/rythme
+ * Fix : Windows (.htaccess sans module Perl)
+ * New : Plus de champ 'correct'
+
+2013/02/17
+ * Version initiale
