@@ -85,7 +85,7 @@ parse ([Line | Lines],
             _ ->
                 Media_baseline = queue:to_list(Baseline),
                 Saccades = saccades(Event_type, 0),
-                Fixations = fixations({0, 0}, Previous_type, Event_type),
+                Fixations = fixations({0, 0}, undefined, Event_type),
                 Stats2 = [{Media_name,
                            {1, Media_baseline, Saccades, Fixations, [Data]}}
                           | Stats],
@@ -121,13 +121,14 @@ sum (X, {Total, Count, Min, Max}) ->
            end,
     {Total + X, Count +1, Min2, Max2}.
 
-headers_parts ([_ | " Baseline "] = Prefix) ->
-    Parts = ["Mean Pupil"],
-    string:join([Prefix ++ Part || Part <- Parts], "\t");
-headers_parts (Prefix) ->
-    Parts = ["Mean Distance", "Mean DistanceLeft", "Mean DistanceRight",
-             "Mean Pupil", "Max Pupil"],
-    string:join([Prefix ++ Part || Part <- Parts], "\t").
+headers_parts (Prefix, List) ->
+    string:join([Prefix ++ header(H) || H <- List], "\t").
+
+header (pa) -> "Mean Pupil";
+header (pmax) -> "Max Pupil";
+header (da) -> "Mean Distance";
+header (dl) -> "Mean DistanceLeft";
+header (dr) -> "Mean DistanceRight".
 
 headers () ->
     Global_baseline =
@@ -135,8 +136,8 @@ headers () ->
              [Emotion] ++ " Mean fixations\t" ++
              [Emotion] ++ " TimeFixation\t" ++
              [Emotion] ++ " %Fixations\t" ++
-             headers_parts([Emotion] ++ " Baseline ") ++ "\t" ++
-             headers_parts([Emotion] ++ " Media ")
+             headers_parts([Emotion] ++ " Baseline ", [pa]) ++ "\t" ++
+             headers_parts([Emotion] ++ " Media ", [da, dl, dr, pa, pmax])
          || Emotion <- emotions()],
     Medias =
         lists:flatmap(
@@ -145,8 +146,9 @@ headers () ->
                   [Prefix, "name\t", Prefix, "Nb saccades\t",
                    Prefix, "Nb fixations\t", Prefix, "TimeFixation\t",
                    Prefix, "%Fixations\t",
-                   headers_parts(Prefix), "\t",
-                   headers_parts(Prefix ++ "Baseline "), "\t"]
+                   headers_parts(Prefix, [da, dl, dr, pa, pmax]), "\t",
+                   headers_parts(Prefix ++ "Baseline ", [da, dl, dr, pa]),
+                   "\t"]
           end, lists:seq(1, 36)),
     io:fwrite("Participant\tRecording_name\tRecording_date\tNb medias\t"
               "Rejected\t" ++
